@@ -83,4 +83,8 @@ We have 3 kind of tests:
 - A/B testing / feature flaging
 - support tickets
 
-# OSS Product - mix between burpsuite, stress testing and integration tests
+### Other
+
+- alernate to cypress - https://github.com/microsoft/playwright
+
+### OSS Product - mix between burpsuite, stress testing and integration tests

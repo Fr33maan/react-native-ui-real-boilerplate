@@ -1,0 +1,26 @@
+name: Test the UI code
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  release-android:
+    name: Test the UI with jest and cypress
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+
+      - name: Install packages
+        run: yarn install
+
+      - name: Run unit tests
+        run: 'yarn test:unit'
+
+      - name: Run integration tests
+        run: 'yarn test:integration'
