@@ -1,0 +1,6 @@
+{
+	"integrationFolder": "src",
+	"watchForFileChanges": true,
+	"testFiles": "**/*.spec.ts",
+	"baseUrl": "http://localhost:39000/"
+}

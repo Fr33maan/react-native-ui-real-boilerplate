@@ -1,0 +1,78 @@
+{
+  // https://www.typescriptlang.org/docs/handbook/compiler-options.html
+  "compilerOptions": {
+    "jsx": "react-native",
+    "noUnusedParameters": true,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "noUnusedLocals": true,
+    "module": "es6",
+    "target": "es5",
+    "moduleResolution": "node",
+    "types": [
+      "jest",
+      "cypress"
+    ],
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "include": [
+      "cypress/**/*.d.ts"
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "App": [
+        "index.tsx"
+      ],
+      "@components": [
+        "components"
+      ],
+      "@navigation": [
+        "navigation/navigation"
+      ],
+      "@rnweb/*": [
+        "lib/rnweb-light/*"
+      ],
+      "@screens": [
+        "screens"
+      ],
+      "@state": [
+        "state/state"
+      ],
+      "@logger": [
+        "lib/logger"
+      ],
+      "actions": [
+        "actions"
+      ],
+      "platform": [
+        "config/platform"
+      ],
+      "uiUtils/*": [
+        "utils/*"
+      ],
+      "config": [
+        "../config"
+      ],
+      "languages": [
+        "../../game/src/data/languages"
+      ],
+      "utils/*": [
+        "../../game/src/utils/*"
+      ],
+      "utils": [
+        "../../game/src/utils"
+      ],
+      "rnweb-light": [
+        "lib/rnweb-light"
+      ],
+      "react-native-udp": [
+        "lib/react-native-udp/"
+      ],
+      "menu": [
+        "menu"
+      ]
+    }
+  }
+}
