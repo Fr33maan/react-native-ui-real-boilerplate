@@ -25,6 +25,9 @@
       "App": [
         "index.tsx"
       ],
+      "@app": [
+        "app"
+      ],
       "@components": [
         "components"
       ],
@@ -42,6 +45,9 @@
       ],
       "@logger": [
         "lib/logger"
+      ],
+      "@lib/*": [
+        "lib/*"
       ],
       "actions": [
         "actions"

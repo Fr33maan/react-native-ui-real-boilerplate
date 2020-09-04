@@ -24,15 +24,15 @@ module.exports = {
 			'module-resolver',
 			{
 				alias: {
+					'@app': './src/app',
 					'@components': './src/components',
 					'@navigation': './src/navigation/navigation',
 					'@rnweb': './src/lib/rnweb-light',
 					'@screens': './src/screens',
 					'@state': './src/state/state',
 					'@logger': './src/lib/logger',
-					lib: './src/lib',
-					App: './src',
-					config: './config',
+					'@lib': './src/lib',
+					'@config': './src/config',
 					webStyles: './src/style/',
 					storage: './src/utils/storage',
 					'react-native': './src/lib/react-native-layer',
