@@ -21,9 +21,11 @@ export const StyleSheet = {
 }
 
 export const Dimensions = {
-	get: (container) => ({
-		width: window.innerWidth,
-		height: window.innerHeight,
+	width: null,
+	height: null,
+	get: () => ({
+		width: Dimensions.width || window.innerWidth,
+		height: Dimensions.height || window.innerHeight,
 		outHeight: window.outerHeight,
 		outWidth: window.outerWidth,
 	}),

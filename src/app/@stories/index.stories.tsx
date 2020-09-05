@@ -10,13 +10,13 @@ export default { title: 'App' }
 
 export function app() {
 	return (
-		<ContextualizedApp>
-			<div style={{ display: 'flex', paddingLeft: 20 }}>
-				<Device device={deviceMatrix[0]} index={0}>
+		<div style={{ display: 'flex', paddingLeft: 20 }}>
+			<Device device={deviceMatrix[0]} index={0}>
+				<ContextualizedApp>
 					<AppWithContext />
-				</Device>
-			</div>
-		</ContextualizedApp>
+				</ContextualizedApp>
+			</Device>
+		</div>
 	)
 }
 
@@ -44,7 +44,7 @@ function IndependantDevices() {
 	)
 }
 
-export function appWithRatio() {
+export function independantApps() {
 	return (
 		<div style={{ display: 'grid', gridTemplateColumns: 'repeat( auto-fit, minmax(250px, 1fr) )' }}>
 			<IndependantDevices />

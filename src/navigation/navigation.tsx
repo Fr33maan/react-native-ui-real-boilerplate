@@ -27,7 +27,7 @@ export function Navigation() {
 						<View key={index}>
 							<Button
 								key={index}
-								style={getNativeStyle({ width: 100, height: 100 })}
+								style={getNativeStyle({ width: '20vh', height: '20vh' })}
 								onPress={() => call({ setRoute: menuEntries[0] })}
 								testID={menuEntries[0]}
 							>

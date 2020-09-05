@@ -10,3 +10,6 @@
 
 // The debug level you want to use for the app
 // export const DEBUG_LEVEL = 6
+
+// TODO - find a way to set this variable
+export const IS_STORYBOOK = true

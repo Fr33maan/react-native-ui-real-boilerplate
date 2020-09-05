@@ -58,8 +58,8 @@
       "uiUtils/*": [
         "utils/*"
       ],
-      "config": [
-        "../config"
+      "@config/*": [
+        "config/*"
       ],
       "languages": [
         "../../game/src/data/languages"
