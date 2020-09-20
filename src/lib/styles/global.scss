@@ -1,0 +1,49 @@
+/* TO IMPORT IN IFRAME */
+/* 
+	DO NOT REMOVE THE UPPER COMMENT 
+	it is used to identify which stylesheet we should import in the iframe
+*/
+
+@font-face {
+	font-family: Roboto-Regular;
+	src: url(../../assets/fonts/Roboto-Regular.ttf);
+}
+
+/*
+Add custom font face to the app
+@font-face {
+	font-family: Capriola-Regular;
+	src: url(../../assets/fonts/Capriola-Regular.ttf);
+}
+*/
+
+* {
+	-ms-overflow-style: none;
+	/* Internet Explorer 10+ */
+	scrollbar-width: none;
+	/* Firefox */
+}
+
+// ::-webkit-scrollbar {
+// 	color: blue !important;
+// 	display: none;
+// 	/* Safari and Chrome */
+// }
+
+p {
+	margin: 0 !important;
+}
+
+.sb-show-main {
+	background-color: rgb(14, 14, 14) !important;
+}
+
+.phoneContainer {
+	overflow: hidden;
+	scrollbar-width: none !important;
+}
+
+.phoneContainer::-webkit-scrollbar {
+	// display: none;
+	scrollbar-width: none !important;
+}

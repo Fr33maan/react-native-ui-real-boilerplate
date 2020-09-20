@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { createPortal } from 'react-dom'
+import { Dimensions } from 'react-native'
 import { deviceMatrix } from './deviceMatrix'
 import { AppWithContext } from '@app'
+import '@lib/styles/global.scss'
 
 function getScaledDevice({ width, height, size }) {
 	// TODO - create input for screen size
@@ -37,8 +39,16 @@ export function Device({ device = deviceMatrix[0], index = 0, children }) {
 	const mountNode = ref?.contentWindow?.document.body
 
 	// Remove the iframe body margin
+	// add stylesheet to iframe
 	if (mountNode) {
 		mountNode.style.margin = '0px'
+
+		// Get the custom stylesheet lib/styles/global.scss from the storybook iframe
+		const customStyleSheet = Array.prototype.slice.call(document.getElementsByTagName('style'))
+			.find(stylesheet => stylesheet.innerHTML.includes('/* TO IMPORT IN IFRAME */'))
+
+		// clone the style node in the device iframe so we get all the fontFamilies
+		mountNode.previousSibling.appendChild(customStyleSheet.cloneNode(true))
 	}
 
 	return (
@@ -51,9 +61,10 @@ export function Device({ device = deviceMatrix[0], index = 0, children }) {
 			}}
 			id={`iframeHolder-${index}`}
 		>
-			<div style={{ marginBottom: '5px' }}>{device.name}</div>
+			<div style={{ marginBottom: '5px', color: 'white', fontFamily: 'Roboto' }}>{device.name}</div>
 			<iframe
 				id={`iframe-${index}`}
+				className="phoneContainer"
 				style={{
 					width: `${getScaledDevice(device).width}px`,
 					height: `${getScaledDevice(device).height}px`,
@@ -64,6 +75,21 @@ export function Device({ device = deviceMatrix[0], index = 0, children }) {
 			>
 				{mountNode && createPortal(React.Children.only(children), mountNode)}
 			</iframe>
+		</div>
+	)
+}
+
+export function DeviceWithApp({ device = deviceMatrix[5], index = 0, children }) {
+	// @ts-ignore - react-native-layer adds width and height properties
+	Dimensions.width = getScaledDevice(device).width
+	// @ts-ignore - react-native-layer adds width and height properties
+	Dimensions.height = getScaledDevice(device).height
+
+	return (
+		<div style={{ display: 'flex', paddingLeft: 20 }}>
+			<Device device={device} index={index}>
+				{children}
+			</Device>
 		</div>
 	)
 }
