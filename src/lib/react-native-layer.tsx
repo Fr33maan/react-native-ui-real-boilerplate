@@ -1,17 +1,10 @@
 import * as React from 'react'
-import { render } from 'react-dom'
-import { receiveMessage } from 'actions'
 const { useEffect, useRef } = React
 
 const globalHolder = {}
 
-/*
-var React = require('react-native')
-  , Dimensions = React.Dimensions || require('Dimensions')
-  , {width, height} = Dimensions.get('window');
-*/
 export const Platform = {
-	select: () => {},
+	select: () => { },
 }
 
 export const StyleSheet = {
