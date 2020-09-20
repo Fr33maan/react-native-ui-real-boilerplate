@@ -3,6 +3,8 @@
  * Some are mandatory for boilerplate components
  */
 
+import { StyleSheet } from 'react-native'
+
 // Make config file for each env with default, test, dev, prod
 
 // Version number should be set automatically by the CI
@@ -13,3 +15,4 @@
 
 // TODO - find a way to set this variable
 export const IS_STORYBOOK = true
+export const IS_NATIVE = !!StyleSheet.absoluteFill

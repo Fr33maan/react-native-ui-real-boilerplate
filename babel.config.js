@@ -13,12 +13,6 @@ module.exports = {
 		['@babel/preset-react'],
 	],
 	plugins: [
-		[
-			'@babel/plugin-transform-runtime',
-			{
-				regenerator: true,
-			},
-		],
 		['@babel/plugin-proposal-class-properties'],
 		[
 			'module-resolver',
@@ -29,14 +23,15 @@ module.exports = {
 					'@navigation': './src/navigation/navigation',
 					'@rnweb': './src/lib/rnweb-light',
 					'@screens': './src/screens',
+					'@images': './src/assets/images',
 					'@state': './src/state/state',
 					'@logger': './src/lib/logger',
 					'@lib': './src/lib',
 					'@config': './src/config',
-					webStyles: './src/style/',
 					storage: './src/utils/storage',
 					'react-native': './src/lib/react-native-layer',
 					'react-native-gesture-handler': './src/lib/react-native-gesture-handler',
+					'react-content-loader/native': './src/lib/react-content-loader',
 					'rnweb-light': './src/lib/react-native-layer',
 					'react-native-modal': './src/lib/react-native-modal',
 					'react-native-webview': './src/lib/react-native-layer',

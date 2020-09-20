@@ -40,6 +40,9 @@
       "@screens": [
         "screens"
       ],
+      "@images": [
+        "assets/images"
+      ],
       "@state": [
         "state/state"
       ],
@@ -49,6 +52,12 @@
       "@lib/*": [
         "lib/*"
       ],
+      "@config": [
+        "config"
+      ],
+      "@config/*": [
+        "config/*"
+      ],
       "actions": [
         "actions"
       ],
@@ -57,9 +66,6 @@
       ],
       "uiUtils/*": [
         "utils/*"
-      ],
-      "@config/*": [
-        "config/*"
       ],
       "languages": [
         "../../game/src/data/languages"
