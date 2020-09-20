@@ -1,5 +1,39 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions, StatusBar } from 'react-native'
 import { syncControlFlow } from '../controlFlow'
+import { IS_NATIVE } from '@config'
+
+export function getNativeNestedStyle(styleSheet: any) {
+	let finalStyle = {}
+	if (IS_NATIVE) {
+		for (const styleName in styleSheet) {
+			let activeStyle = { ...styleSheet[styleName] }
+			for (const prop in activeStyle) {
+				// Will update the activeStyle object
+				syncControlFlow(
+					{ activeStyle, prop, val: activeStyle[prop] },
+					{
+						getWidth,
+						getHeight,
+						getTop,
+						getPadding,
+						// getMargin,
+						getBorder,
+						getBorderBottom,
+						getBorderRadius,
+						getFontSize,
+						//getBackground,
+						//getTransform,
+						removeNonRnProperties,
+					},
+				)
+			}
+			finalStyle[styleName] = { ...activeStyle }
+		}
+		return StyleSheet.create({ ...finalStyle })
+	}
+
+	return styleSheet
+}
 
 // TODO create interface for stylesheet
 export function getNativeStyle(styleSheet: any, IS_NATIVE = true) {
@@ -11,9 +45,11 @@ export function getNativeStyle(styleSheet: any, IS_NATIVE = true) {
 			syncControlFlow(
 				{ activeStyle, prop, val: activeStyle[prop] },
 				{
+					// getSubStyle,
 					getWidth,
 					getHeight,
 					getPadding,
+					// getMargin,
 					getBorder,
 					getBorderBottom,
 					getBorderRadius,
@@ -35,7 +71,7 @@ export function vw(percent: number = 1) {
 }
 
 export function vh(percent: number = 1) {
-	const { height } = Dimensions.get('window')
+	const height = Dimensions.get('window').height - StatusBar.currentHeight
 	return Math.round((percent * height) / 100)
 }
 
@@ -219,6 +255,22 @@ export function getHeight({ prop, activeStyle }) {
 	}
 }
 
+export function getTop({ prop, activeStyle }) {
+	const val = activeStyle[prop]
+
+	if (prop === 'top' && !Number.isInteger(val)) {
+		if (val?.match(/vw/)) {
+			const percent = parseFloat(val.match(/([\d.]+)vw/)[1])
+			activeStyle[prop] = vw(percent)
+		} else if (val?.match(/vh/)) {
+			const percent = parseFloat(val.match(/([\d.]+)vh/)[1])
+			activeStyle[prop] = vh(percent)
+		} else if (val?.match(/px/)) {
+			activeStyle[prop] = parseInt(val.replace('px', ''))
+		}
+	}
+}
+
 export function getPadding({ prop, activeStyle }) {
 	const val = activeStyle[prop]
 
@@ -233,7 +285,37 @@ export function getPadding({ prop, activeStyle }) {
 			activeStyle[prop] = parseInt(val.replace('px', ''))
 		}
 	}
+
+	if (prop === 'paddingBottom' && !Number.isInteger(val)) {
+		if (val?.match(/vw/)) {
+			const percent = parseFloat(val.match(/([\d.]+)vw/)[1])
+			activeStyle[prop] = vw(percent)
+		} else if (val?.match(/vh/)) {
+			const percent = parseFloat(val.match(/([\d.]+)vh/)[1])
+			activeStyle[prop] = vh(percent)
+		} else if (val?.match(/px/)) {
+			activeStyle[prop] = parseInt(val.replace('px', ''))
+		}
+	}
 }
+
+// export function getMargin({ prop, activeStyle }) {
+// 	const val = activeStyle[prop]
+
+// 	if (prop === 'margin' && !Number.isInteger(val)) {
+// 		if (val?.match(/vw/)) {
+// 			const percent = parseFloat(val.match(/([\d.]+)vw/)[1])
+// 			activeStyle[prop] = vw(percent)
+// 		} else if (val?.match(/vh/)) {
+// 			const percent = parseFloat(val.match(/([\d.]+)vh/)[1])
+// 			activeStyle[prop] = vh(percent)
+// 		} else if (val?.match(/px/)) {
+// 			activeStyle[prop] = parseInt(val.replace('px', ''))
+// 		}
+// 	} else {
+// 		activeStyle[prop] = 0
+// 	}
+// }
 
 /**
  *
