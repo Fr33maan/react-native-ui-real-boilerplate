@@ -148,17 +148,17 @@ export function Pressable(props) {
 			style={{ ...style, cursor: 'pointer' }}
 			id={testID}
 			// onTouchStart={onPressIn}
-			onTouchEnd={() => {
+			onTouchEnd={(e) => {
 				if (USE_TOUCH) {
 					// onPressOut()
-					onPress()
+					onPress(e)
 				}
 			}}
 			// onMouseDown={onPressIn}
-			onMouseUp={() => {
+			onMouseUp={(e) => {
 				if (!USE_TOUCH) {
 					// onPressOut()
-					onPress()
+					onPress(e)
 				}
 			}}
 		>
