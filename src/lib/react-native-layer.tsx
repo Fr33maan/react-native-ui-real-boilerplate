@@ -20,6 +20,24 @@ export const StyleSheet = {
 	},
 }
 
+export class StatusBar extends React.Component {
+	static currentHeight = 0
+	render() {
+		return (
+			<div
+				style={{
+					position: 'fixed',
+					backgroundColor: this.props.backgroundColor || 'white',
+					width: '100%',
+					color: this.props.backgroundColor ? 'white' : 'black',
+				}}
+			>
+				Status bar 100%
+			</div>
+		)
+	}
+}
+
 export const Dimensions = {
 	width: null,
 	height: null,
@@ -33,18 +51,17 @@ export const Dimensions = {
 
 function detectFlex(props) {
 	const newProps = { ...props, style: { ...props.style } }
-	if (
-		props.style &&
-		(props.style.flexDirection ||
-			props.style.flex ||
-			props.style.alignItems ||
-			props.style.justifyContent)
-	) {
+	if (props.style && (props.style.flexDirection || props.style.flex || props.style.alignItems || props.style.justifyContent)) {
 		newProps.style.display = 'flex'
 		newProps.style.flexDirection = props.style.flexDirection || 'column'
 	}
+
 	newProps.style.boxSizing = 'border-box'
 	return newProps
+}
+
+export function Image({ source, style }) {
+	return <img src={source} style={style} />
 }
 
 export function View({ refName, style, children, id, testID, call = null }) {
@@ -68,7 +85,13 @@ export function View({ refName, style, children, id, testID, call = null }) {
 export function Text(props) {
 	const { style, children } = detectFlex(props)
 
-	const { style: styleProp, children: childrenProp, ...otherProps } = props
+	const { style: styleProp, children: childrenProp, testID, ...otherProps } = props
+
+	if (!style.margin) {
+		style.margin = 0
+	}
+
+	style.textOverflow = 'ellipsis'
 
 	// if we have an array of elements we concatenate all
 	if (children instanceof Array) {
@@ -83,10 +106,10 @@ export function Text(props) {
 			})
 			.join('')
 
-		return <p style={style} dangerouslySetInnerHTML={{ __html: childs }} />
+		return <p id={testID} style={style} dangerouslySetInnerHTML={{ __html: childs }} />
 	}
 
-	return <p style={style} {...otherProps} dangerouslySetInnerHTML={{ __html: children }} />
+	return <p id={testID} style={style} {...otherProps} dangerouslySetInnerHTML={{ __html: children }} />
 }
 
 export function TouchableWithoutFeedback(props) {
