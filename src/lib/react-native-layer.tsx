@@ -32,8 +32,8 @@ export class StatusBar extends React.Component {
 }
 
 export const Dimensions = {
-	width: null,
-	height: null,
+	width: 244.83,
+	height: 544.86,
 	get: () => ({
 		width: Dimensions.width || window.innerWidth,
 		height: Dimensions.height || window.innerHeight,
