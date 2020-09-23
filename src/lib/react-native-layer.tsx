@@ -75,6 +75,32 @@ export function View({ refName, style, children, id, testID, call = null }) {
 	)
 }
 
+export function ImageBackground(props) {
+	const { style, source, imageStyle } = props
+	const backgroundStyle = {
+		background: `url(${source})`,
+		backgroundSize: '100% auto'
+	}
+
+	if (imageStyle?.width && imageStyle?.height) {
+		backgroundStyle.backgroundSize = `${imageStyle.width}px ${imageStyle.height}px`
+	}
+
+	if (imageStyle?.top && imageStyle?.left) {
+		backgroundStyle.backgroundPosition = `${imageStyle.left}px ${imageStyle.top}px`
+	}
+
+	if (imageStyle?.bottom || imageStyle?.right) {
+		console.warn('Cannot specify a bottom or right property for ImageBackground')
+	}
+
+	return (
+		<View {...props} style={{ ...style, ...backgroundStyle }} />
+	)
+}
+
+export const ScrollView = View
+
 export function Text(props) {
 	const { style, children } = detectFlex(props)
 
