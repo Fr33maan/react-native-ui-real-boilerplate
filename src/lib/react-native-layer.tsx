@@ -101,7 +101,20 @@ export function ImageBackground(props) {
 	)
 }
 
-export const ScrollView = View
+export function ScrollView(props) {
+	const { style, contentContainerStyle } = props
+
+	const newStyle = {
+		...style,
+		...contentContainerStyle
+	}
+
+	newStyle.height = null
+
+	return (
+		<View {...props} style={newStyle} />
+	)
+}
 
 export function Text(props) {
 	const { style, children } = detectFlex(props)
