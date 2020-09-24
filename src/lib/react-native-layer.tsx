@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { renderToString } from 'react-dom/server'
+
 const { useEffect, useRef } = React
 
 const globalHolder = {}
@@ -119,6 +121,8 @@ export function Text(props) {
 			.map((elem) => {
 				if (elem instanceof Array) {
 					return elem.join('')
+				} else if (elem?.type?.name === 'Br') {
+					return renderToString(elem)
 				} else {
 					return elem
 				}
