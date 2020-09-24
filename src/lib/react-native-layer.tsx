@@ -205,14 +205,7 @@ export function Pressable(props) {
 
 export function TextInput(props) {
 	const { style, onPress, children, onChangeText, value } = detectFlex(props)
-	return (
-		<input
-			type="text"
-			onChange={onChangeText}
-			value={value}
-			style={{ outline: 'none', borderWidth: 0, ...style }}
-		/>
-	)
+	return <input type="text" onChange={onChangeText} value={value} style={{ outline: 'none', borderWidth: 0, ...style }} />
 }
 
 export class WebView extends React.Component {
