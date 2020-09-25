@@ -1,3 +1,4 @@
+import { IS_NATIVE } from '@config'
 import { StyleSheet, Dimensions, StatusBar } from 'react-native'
 import { syncControlFlow } from '../controlFlow'
 
@@ -15,6 +16,7 @@ export function getNativeNestedStyle(styleSheet: any) {
 					getBorderBottom,
 					getBorderRadius,
 					removeNonRnProperties,
+					getTransform
 				},
 			)
 		}
@@ -26,16 +28,21 @@ export function getNativeNestedStyle(styleSheet: any) {
 
 export function vw(percent: number = 1) {
 	const { width } = Dimensions.get('window')
-	return Math.round((percent * width) / 100)
+	return Math.floor((percent * width) / 100)
 }
 
 export function vh(percent: number = 1) {
 	const height = Dimensions.get('window').height - StatusBar.currentHeight
-	return Math.round((percent * height) / 100)
+	return Math.floor((percent * height) / 100)
 }
 
 // TODO - inspect how its working
 export function getTransform({ prop, activeStyle }) {
+
+	// In HTML we dont change
+	if (!IS_NATIVE) return
+
+	const val = activeStyle[prop]
 	if (prop === 'transform' && typeof val === 'string') {
 		const transform = val.match(/(\w+)\(((-?\d+)(deg|px))\)/)
 		if (transform[4] === 'px') {
@@ -91,7 +98,7 @@ export function getBackground({ prop, activeStyle }) {
  * @param param0
  *
  */
-export function getBorderRadius({ prop, activeStyle, _vw = vw }) {
+export function getBorderRadius({ prop, activeStyle, _vw = vw, _vh = vh }) {
 	if (prop === 'borderRadius') {
 		const val = activeStyle[prop]
 
@@ -120,8 +127,8 @@ export function getBorderRadius({ prop, activeStyle, _vw = vw }) {
 
 				activeStyle.borderTopLeftRadius = parseInt(topLeft)
 				activeStyle.borderTopRightRadius = parseInt(topRight)
-				activeStyle.borderBottomRightRadius = parseInt(bottomRight) || parseInt(topLeft)
-				activeStyle.borderBottomLeftRadius = parseInt(bottomLeft) || parseInt(topRight)
+				activeStyle.borderBottomRightRadius = typeof parseInt(bottomRight) === 'number' ? parseInt(bottomRight) : parseInt(topLeft)
+				activeStyle.borderBottomLeftRadius = typeof parseInt(bottomLeft) === 'number' ? parseInt(bottomLeft) : parseInt(topRight)
 
 				// test borderRadius prop is deleted from activeStyle
 				delete activeStyle[prop]
@@ -133,6 +140,13 @@ export function getBorderRadius({ prop, activeStyle, _vw = vw }) {
 
 				if (global) {
 					activeStyle.borderRadius = _vw(parseInt(val.replace('vw', '')))
+				}
+			} else if (val.match(/vh/g)) {
+				// Global means only one value is used as borderRadius
+				const global = val.split(' ').length === 1
+
+				if (global) {
+					activeStyle.borderRadius = _vh(parseInt(val.replace('vh', '')))
 				}
 			} else if (Number.isInteger(parseInt(val))) {
 				return { activeStyle, prop }
@@ -202,7 +216,8 @@ export function getSingleProperty({ prop, activeStyle }) {
 		'marginRight',
 		'marginBottom',
 		'marginTop',
-		'fontSize'
+		'fontSize',
+		'lineHeight'
 	]
 
 	const val = activeStyle[prop]

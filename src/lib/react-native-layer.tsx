@@ -70,6 +70,11 @@ export function View({ refName, style, children, id, testID, call = null }) {
 
 	const flexStyle = detectFlex({ style })
 
+	if (flexStyle.style?.height) {
+		flexStyle.style.minHeight = flexStyle.style.height
+		flexStyle.style.maxHeight = flexStyle.style.height
+	}
+
 	return (
 		<div {...{ id }} style={flexStyle.style} ref={ref} id={testID}>
 			{children}
@@ -106,10 +111,12 @@ export function ScrollView(props) {
 
 	const newStyle = {
 		...style,
-		...contentContainerStyle
+		...contentContainerStyle,
+		overflow: 'scroll'
 	}
 
-	newStyle.height = null
+	// newStyle.height = null
+
 
 	return (
 		<View {...props} style={newStyle} />
@@ -117,7 +124,7 @@ export function ScrollView(props) {
 }
 
 export function Text(props) {
-	const { style, children } = detectFlex(props)
+	const { style, children, numberOfLines } = detectFlex(props)
 
 	const { style: styleProp, children: childrenProp, testID, ...otherProps } = props
 
@@ -126,6 +133,11 @@ export function Text(props) {
 	}
 
 	style.textOverflow = 'ellipsis'
+	style.overflow = 'hidden'
+	// style.wordWrap = 'break-word'
+	if (numberOfLines) {
+		style.whiteSpace = 'nowrap'
+	}
 
 	// if we have an array of elements we concatenate all
 	if (children instanceof Array) {
