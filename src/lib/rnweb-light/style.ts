@@ -28,12 +28,21 @@ export function getNativeNestedStyle(styleSheet: any) {
 
 export function vw(percent: number = 1) {
 	const { width } = Dimensions.get('window')
-	return Math.floor((percent * width) / 100)
+	if (IS_NATIVE) {
+		return (percent * width) / 100
+	} else {
+		return Math.floor((percent * width) / 100)
+	}
 }
 
 export function vh(percent: number = 1) {
 	const height = Dimensions.get('window').height - StatusBar.currentHeight
-	return Math.floor((percent * height) / 100)
+
+	if (IS_NATIVE) {
+		return (percent * height) / 100
+	} else {
+		return Math.floor((percent * height) / 100)
+	}
 }
 
 // TODO - inspect how its working
@@ -222,7 +231,7 @@ export function getSingleProperty({ prop, activeStyle }) {
 
 	const val = activeStyle[prop]
 
-	if (singleProperties.includes(prop) && !Number.isInteger(val)) {
+	if (singleProperties.includes(prop) && isNaN(Number(val))) {
 		const sign = val.match(/^-/) ? -1 : 1
 		if (val?.match(/vw/)) {
 			const percent = parseFloat(val.match(/([\d.]+)vw/)[1])
